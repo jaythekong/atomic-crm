@@ -13,7 +13,7 @@ import {
 } from "ra-core";
 import { useState } from "react";
 import { useFormState } from "react-hook-form";
-import { RecordField } from "@/components/admin/record-field";
+import { RecordField } from "@/components/admin/record-fielda";
 import { TextInput } from "@/components/admin/text-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -239,7 +239,7 @@ const ProfileForm = ({
               </h2>
               <p className="text-sm text-muted-foreground">
                 {translate("crm.profile.inbound.description", {
-                  _: "You can start sending emails to your server's inbound email address, e.g. by adding it to the Cc: field. Atomic CRM will process the emails and add notes to the corresponding contacts.",
+                  _: "You can start sending emails to your server's inbound email address, e.g. by adding it to the Cc: field. Dalo CRM will process the emails and add notes to the corresponding contacts.",
                   field: "Cc:",
                 })}
               </p>
