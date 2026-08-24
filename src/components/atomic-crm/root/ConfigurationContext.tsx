@@ -17,6 +17,7 @@ export interface ConfigurationContextValue {
   title: string;
   darkModeLogo: string;
   lightModeLogo: string;
+  favicon: string;
 }
 
 export const useConfigurationContext = () => {
@@ -24,8 +25,6 @@ export const useConfigurationContext = () => {
     CONFIGURATION_STORE_KEY,
     defaultConfiguration,
   );
-  // Merge with defaults so that missing fields in stored config
-  // fall back to default values (e.g. when new settings are added)
   return useMemo(() => ({ ...defaultConfiguration, ...config }), [config]);
 };
 
