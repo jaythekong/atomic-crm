@@ -9,7 +9,7 @@ import {
   useNotify,
   useTranslate,
 } from "ra-core";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react"
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -144,6 +144,15 @@ const transformFormValues = (data: Record<string, any>) => ({
 export const SettingsPage = () => {
   const updateConfiguration = useConfigurationUpdater();
   const notify = useNotify();
+    // Capture the submitted config so onSuccess can use it even if the server
+    // response omits fields (e.g. favicon) that the worker doesn't persist yet.
+    const lastSubmittedConfig = useRef<ConfigurationContextValue | null>(null);
+
+    const transform = useCallback((data: Record<string, any>) => {
+          const result = transformFormValues(data);
+          lastSubmittedConfig.current = result.config;
+          return result;
+    }, []);
 
   return (
     <EditBase
@@ -151,10 +160,10 @@ export const SettingsPage = () => {
       id={1}
       mutationMode="pessimistic"
       redirect={false}
-      transform={transformFormValues}
+      transform={transform}
       mutationOptions={{
         onSuccess: (data: any) => {
-          updateConfiguration(data.config);
+          updateConfiguration(lastSubmittedConfig.current ?? data.config);
           notify("crm.settings.saved");
         },
         onError: () => {
