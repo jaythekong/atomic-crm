@@ -116,12 +116,21 @@ const getCurrencyChoices = () => {
   }));
 };
 
+/** Recursively extract the plain string URL/data-URI from an ImageEditorField value.
+ * Old saves stored the raw {src, title, rawFile} object shape into D1, so this handles
+ * single or double nesting gracefully. */
+const extractSrc = (val: any): string => {
+  if (typeof val === 'string') return val;
+  if (val?.src != null) return extractSrc(val.src);
+  return '';
+};
+
 const transformFormValues = (data: Record<string, any>) => ({
   config: {
     title: data.title,
-    lightModeLogo: data.lightModeLogo,
-    darkModeLogo: data.darkModeLogo,
-    favicon: data.favicon,
+    lightModeLogo: extractSrc(data.lightModeLogo),
+    darkModeLogo: extractSrc(data.darkModeLogo),
+    favicon: extractSrc(data.favicon),
     currency: data.currency,
     companySectors: ensureValues(data.companySectors),
     dealCategories: ensureValues(data.dealCategories),
