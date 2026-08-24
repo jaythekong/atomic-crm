@@ -498,6 +498,61 @@ const McpServerSection = () => {
           value={import.meta.env.VITE_API_KEY || 'dalo-crm-secret-2024'}
         />
       </ItemGroup>
+      <ConnectInstructionsMobile />
+    </div>
+  );
+};
+
+const ConnectInstructionsMobile = () => {
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const mcpUrl = `${import.meta.env.VITE_WORKER_URL || 'https://dalo-crm-api.dalo-crm.workers.dev'}/mcp`;
+  const apiKey = import.meta.env.VITE_API_KEY || 'dalo-crm-secret-2024';
+
+  const config = JSON.stringify({
+    mcpServers: {
+      "dalo-crm": {
+        command: "npx",
+        args: ["-y", "mcp-remote", mcpUrl, "--header", `Authorization: Bearer ${apiKey}`]
+      }
+    }
+  }, null, 2);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(config);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <div className="mt-2 border rounded-lg overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-left"
+      >
+        <span>How to connect Claude Desktop</span>
+        <span className="text-muted-foreground text-xs">{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+        <div className="border-t px-4 py-3 space-y-3 bg-muted/20">
+          <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
+            <li>Open Claude Desktop → Settings → Developer → Edit Config</li>
+            <li>Paste the config below, save, restart Claude Desktop</li>
+          </ol>
+          <div className="relative">
+            <pre className="text-xs bg-muted rounded p-3 overflow-x-auto whitespace-pre">{config}</pre>
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="absolute top-2 right-2 text-xs px-2 py-1 rounded border bg-background"
+            >
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
