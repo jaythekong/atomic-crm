@@ -20,17 +20,19 @@ const Header = () => {
     if (title) document.title = title;
   }, [title]);
 
-  // Keep browser favicon in sync with the configured favicon
+  // Keep browser favicon in sync with the configured favicon.
+  // We remove and re-insert the element instead of mutating href in place
+  // because Chrome caches the favicon and won't reload it on a simple href change.
   useEffect(() => {
     if (!favicon) return;
-    let link = document.querySelector<HTMLLinkElement>("link[rel~='shortcut icon']");
-    if (!link) {
-      link = document.createElement("link");
-      link.rel = "shortcut icon";
-      document.head.appendChild(link);
-    }
+    const existing = document.querySelector<HTMLLinkElement>("link[rel='shortcut icon']");
+    if (existing) existing.remove();
+    const link = document.createElement("link");
+    link.rel = "shortcut icon";
     link.href = favicon;
+    document.head.appendChild(link);
   }, [favicon]);
+  
   const translate = useTranslate();
 
   let currentPath: string | boolean = "/";
