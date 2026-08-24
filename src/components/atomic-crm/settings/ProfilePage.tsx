@@ -13,7 +13,7 @@ import {
 } from "ra-core";
 import { useState } from "react";
 import { useFormState } from "react-hook-form";
-import { RecordField } from "@/components/admin/record-fielda";
+import { RecordField } from "@/components/admin/record-field";
 import { TextInput } from "@/components/admin/text-input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
