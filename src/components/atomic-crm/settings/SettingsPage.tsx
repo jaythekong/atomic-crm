@@ -121,6 +121,7 @@ const transformFormValues = (data: Record<string, any>) => ({
     title: data.title,
     lightModeLogo: data.lightModeLogo,
     darkModeLogo: data.darkModeLogo,
+    favicon: data.favicon,
     currency: data.currency,
     companySectors: ensureValues(data.companySectors),
     dealCategories: ensureValues(data.dealCategories),
@@ -169,6 +170,7 @@ const SettingsForm = () => {
       title: config.title,
       lightModeLogo: { src: config.lightModeLogo },
       darkModeLogo: { src: config.darkModeLogo },
+      favicon: { src: config.favicon },
       currency: config.currency,
       companySectors: config.companySectors,
       dealCategories: config.dealCategories,
@@ -278,7 +280,7 @@ const SettingsFormFields = () => {
               {translate("crm.settings.sections.branding")}
             </h2>
             <TextInput source="title" label="crm.settings.app_title" />
-            <div className="flex gap-8">
+            <div className="flex gap-8 flex-wrap">
               <div className="flex flex-col items-center gap-1">
                 <p className="text-sm text-muted-foreground">
                   {translate("crm.settings.light_mode_logo")}
@@ -301,6 +303,18 @@ const SettingsFormFields = () => {
                   height={100}
                   linkPosition="bottom"
                   backgroundImageColor="#1a1a1a"
+                />
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <p className="text-sm text-muted-foreground">
+                  Favicon (browser tab icon)
+                </p>
+                <ImageEditorField
+                  source="favicon"
+                  width={64}
+                  height={64}
+                  linkPosition="bottom"
+                  backgroundImageColor="#f5f5f5"
                 />
               </div>
             </div>
@@ -479,6 +493,7 @@ const SettingsFormFields = () => {
                     src: defaultConfiguration.lightModeLogo,
                   },
                   darkModeLogo: { src: defaultConfiguration.darkModeLogo },
+                  favicon: { src: defaultConfiguration.favicon },
                 })
               }
             >
