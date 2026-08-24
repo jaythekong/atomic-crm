@@ -20,12 +20,31 @@ export interface ConfigurationContextValue {
   favicon: string;
 }
 
+/** Recursively extract a plain string from a value that may be stored as a
+ * raw {src,...} ImageEditorField object (old save format). */
+const normSrc = (v: unknown): string => {
+  if (typeof v === "string") return v;
+  if (v != null && typeof v === "object" && "src" in v)
+    return normSrc((v as { src: unknown }).src);
+  return "";
+};
+
 export const useConfigurationContext = () => {
   const [config] = useStore<ConfigurationContextValue>(
     CONFIGURATION_STORE_KEY,
     defaultConfiguration,
   );
-  return useMemo(() => ({ ...defaultConfiguration, ...config }), [config]);
+  // Merge with defaults so that missing fields in stored config
+  // fall back to default values (e.g. when new settings are added).
+  // Also normalise logo/favicon fields that may be stored as {src,...} objects
+  // from an older save format.
+  return useMemo(() => {
+    const merged = { ...defaultConfiguration, ...config };
+    merged.lightModeLogo = normSrc(merged.lightModeLogo) || defaultConfiguration.lightModeLogo;
+    merged.darkModeLogo  = normSrc(merged.darkModeLogo)  || defaultConfiguration.darkModeLogo;
+    merged.favicon       = normSrc(merged.favicon);
+    return merged;
+  }, [config]);
 };
 
 export const useConfigurationUpdater = () => {
