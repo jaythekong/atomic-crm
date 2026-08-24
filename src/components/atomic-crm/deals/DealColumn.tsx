@@ -35,6 +35,7 @@ export const DealColumn = ({
           <div
             ref={droppableProvided.innerRef}
             {...droppableProvided.droppableProps}
+            style={{ minHeight: "120px" }}
             className={`flex flex-col rounded-2xl mt-2 gap-2 ${
               snapshot.isDraggingOver ? "bg-muted" : ""
             }`}
