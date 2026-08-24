@@ -24,15 +24,17 @@ const Header = () => {
   // Remove and re-insert instead of mutating href — Chrome won't reload
   // a cached favicon on a simple href change; a new DOM element forces it.
   useEffect(() => {
-    if (!favicon) return;
-    const existing = document.querySelector<HTMLLinkElement>("link[rel='shortcut icon']");
-    if (existing) existing.remove();
-    const link = document.createElement("link");
-    link.rel = "shortcut icon";
-    link.href = favicon;
-    document.head.appendChild(link);
+        if (!favicon) return;
+        // Remove ALL existing favicon links (both rel="icon" and rel="shortcut icon")
+        // Chrome prefers rel="icon" so we insert that type.
+        document
+          .querySelectorAll<HTMLLinkElement>("link[rel='icon'], link[rel='shortcut icon']")
+          .forEach((el) => el.remove());
+        const link = document.createElement("link");
+        link.rel = "icon";
+        link.href = favicon;
+        document.head.appendChild(link);
   }, [favicon]);
-  
   const translate = useTranslate();
 
   let currentPath: string | boolean = "/";
