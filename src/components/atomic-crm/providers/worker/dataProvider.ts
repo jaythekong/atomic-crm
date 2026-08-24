@@ -62,7 +62,9 @@ const create = async (resource: string, params: any) => {
 };
 
 const update = async (resource: string, params: any) => {
-  const result = await apiFetch(`/api/${resource}/${params.id}`, { method: "PUT", body: JSON.stringify(params.data) });
+  // Merge previousData with data so a partial update (e.g. status-only) never wipes other fields
+  const merged = { ...(params.previousData ?? {}), ...params.data };
+  const result = await apiFetch(`/api/${resource}/${params.id}`, { method: "PUT", body: JSON.stringify(merged) });
   return { data: result.data };
 };
 
