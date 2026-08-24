@@ -21,8 +21,8 @@ const Header = () => {
   }, [title]);
 
   // Keep browser favicon in sync with the configured favicon.
-  // We remove and re-insert the element instead of mutating href in place
-  // because Chrome caches the favicon and won't reload it on a simple href change.
+  // Remove and re-insert instead of mutating href — Chrome won't reload
+  // a cached favicon on a simple href change; a new DOM element forces it.
   useEffect(() => {
     if (!favicon) return;
     const existing = document.querySelector<HTMLLinkElement>("link[rel='shortcut icon']");
