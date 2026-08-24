@@ -1,5 +1,6 @@
 import { FileText, Import, Settings, User, Users } from "lucide-react";
 import { CanAccess, useTranslate, useUserMenu } from "ra-core";
+import { useEffect } from "react";
 import { Link, matchPath, useLocation } from "react-router";
 import { RefreshButton } from "@/components/admin/refresh-button";
 import { ThemeModeToggle } from "@/components/admin/theme-mode-toggle";
@@ -11,8 +12,25 @@ import { ImportPage } from "../misc/ImportPage";
 import { ChangelogPage } from "../misc/ChangelogPage";
 
 const Header = () => {
-  const { darkModeLogo, lightModeLogo, title } = useConfigurationContext();
+  const { darkModeLogo, lightModeLogo, title, favicon } = useConfigurationContext();
   const location = useLocation();
+
+  // Keep browser tab title in sync with the configured app title
+  useEffect(() => {
+    if (title) document.title = title;
+  }, [title]);
+
+  // Keep browser favicon in sync with the configured favicon
+  useEffect(() => {
+    if (!favicon) return;
+    let link = document.querySelector<HTMLLinkElement>("link[rel~='shortcut icon']");
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "shortcut icon";
+      document.head.appendChild(link);
+    }
+    link.href = favicon;
+  }, [favicon]);
   const translate = useTranslate();
 
   let currentPath: string | boolean = "/";
