@@ -261,9 +261,18 @@ const ProfileForm = ({
                 _: "Use this URL to connect your AI assistant to your CRM data via the Model Context Protocol (MCP).",
               })}
             </p>
-            <CopyPaste
-              value={`${import.meta.env.VITE_WORKER_URL || 'https://dalo-crm-api.dalo-crm.workers.dev'}/mcp`}
-            />
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground">URL</p>
+              <CopyPaste
+                value={`${import.meta.env.VITE_WORKER_URL || 'https://dalo-crm-api.dalo-crm.workers.dev'}/mcp`}
+              />
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground">API Key</p>
+              <CopyPaste
+                value={import.meta.env.VITE_API_KEY || 'dalo-crm-secret-2024'}
+              />
+            </div>
           </div>
         </CardContent>
       </Card>
