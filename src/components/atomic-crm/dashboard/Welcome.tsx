@@ -7,34 +7,24 @@ export const Welcome = () => (
     </CardHeader>
     <CardContent className="px-4">
       <p className="text-sm mb-4">
-        <a
-          href="https://marmelab.com/atomic-crm"
-          className="underline hover:no-underline"
-        >
-          Atomic CRM
-        </a>{" "}
-        is a template designed to help you quickly build your own CRM.
-      </p>
-      <p className="text-sm mb-4">
-        This demo runs on a mock API, so you can explore and modify the data. It
-        resets on reload. The full version uses Supabase for the backend.
+        Dalo CRM is your all-in-one tool for managing contacts, companies,
+        deals, and tasks — built to keep your team aligned and your pipeline
+        moving.
       </p>
       <p className="text-sm">
-        Powered by{" "}
-        <a
-          href="https://marmelab.com/shadcn-admin-kit"
-          className="underline hover:no-underline"
-        >
-          shadcn-admin-kit
+        Head to{" "}
+        <a href="#/contacts" className="underline hover:no-underline">
+          Contacts
         </a>
-        , Atomic CRM is fully open-source. You can find the code at{" "}
-        <a
-          href="https://github.com/marmelab/atomic-crm"
-          className="underline hover:no-underline"
-        >
-          marmelab/atomic-crm
+        ,{" "}
+        <a href="#/companies" className="underline hover:no-underline">
+          Companies
         </a>
-        .
+        , or{" "}
+        <a href="#/deals" className="underline hover:no-underline">
+          Deals
+        </a>{" "}
+        to get started.
       </p>
     </CardContent>
   </Card>
