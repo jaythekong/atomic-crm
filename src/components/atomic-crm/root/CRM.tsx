@@ -166,11 +166,6 @@ export const CRM = ({
         return result;
       },
       logout: async (params: any) => {
-        try {
-          store.removeItem(CONFIGURATION_STORE_KEY);
-        } catch {
-          // Ignore
-        }
         return authProvider.logout(params);
       },
     }),
