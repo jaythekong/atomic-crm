@@ -489,7 +489,13 @@ const McpServerSection = () => {
       </p>
       <ItemGroup className="rounded-lg border overflow-hidden">
         <CopyPasteRow
+          label="URL"
           value={`${import.meta.env.VITE_WORKER_URL || 'https://dalo-crm-api.dalo-crm.workers.dev'}/mcp`}
+        />
+        <ItemSeparator />
+        <CopyPasteRow
+          label="API Key"
+          value={import.meta.env.VITE_API_KEY || 'dalo-crm-secret-2024'}
         />
       </ItemGroup>
     </div>
@@ -520,7 +526,7 @@ const AboutSection = () => {
   );
 };
 
-const CopyPasteRow = ({ value }: { value: string }) => {
+const CopyPasteRow = ({ value, label }: { value: string; label?: string }) => {
   const translate = useTranslate();
   const [copied, setCopied] = useState(false);
   const handleCopy = () => {
@@ -541,6 +547,7 @@ const CopyPasteRow = ({ value }: { value: string }) => {
             onClick={handleCopy}
           >
             <ItemContent className="overflow-hidden">
+              {label && <p className="text-xs text-muted-foreground">{label}</p>}
               <ItemTitle className="font-normal truncate">{value}</ItemTitle>
             </ItemContent>
             <ItemActions className="shrink-0">
