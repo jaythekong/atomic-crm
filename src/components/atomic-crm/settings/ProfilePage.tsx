@@ -262,7 +262,7 @@ const ProfileForm = ({
               })}
             </p>
             <CopyPaste
-              value={`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/mcp`}
+              value={`${import.meta.env.VITE_WORKER_URL || 'https://dalo-crm-api.dalo-crm.workers.dev'}/mcp`}
             />
           </div>
         </CardContent>
